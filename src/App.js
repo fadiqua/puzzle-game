@@ -31,6 +31,15 @@ class App extends Component {
     return arr;
   }
 
+  isSorted(arr) {
+    for (let k = 0; k < arr.length; k++){
+      if (arr[k] > arr[k + 1]) {
+        return false;
+      }
+    }
+    return true;
+
+  }
   _handleChange(e) {
     if(!e.target.value || !parseInt(e.target.value, 10)) return;
     const count = parseInt(e.target.value, 10) || 1;
@@ -54,12 +63,9 @@ class App extends Component {
   _onDragEnd(e) {
     e.preventDefault();
     const { dragOver } = this.state;
-    console.log(e.target.id);
     if(dragOver !== null) {
       this.clearDrggingState();
     }
-    // e.dataTransfer.setData("text", e.target.id);
-
   }
   _onDragOver(e) {
     e.preventDefault();
@@ -135,6 +141,7 @@ class App extends Component {
   }
 
   render() {
+    const isSorted = this.isSorted(this.puzzles);
     return (
       <div className="app">
         <h1>Welcome to Puzzle Game</h1>
@@ -149,6 +156,10 @@ class App extends Component {
             // value={`${count}`}
           />
         </div>
+        {isSorted &&
+        <div className="alert">
+         <h3>Great Work! You have Successfully rearranged ths puzzle</h3>
+        </div>}
         <div className="puzzle-container">
           <div className="row">
             { this._renderPuzzles() }
