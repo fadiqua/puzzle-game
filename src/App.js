@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   _handleChange(e) {
-    if(!e.target.value) return;
+    if(!e.target.value || !parseInt(e.target.value, 10)) return;
     const count = parseInt(e.target.value, 10) || 1;
     this.puzzles = this._puzzles(count);
     this.setState({
@@ -43,7 +43,6 @@ class App extends Component {
 
   _handlePuzzleCount(e) {
     e.preventDefault();
-    console.log(e.target.name)
   }
 
   _onDragStart(e) {
@@ -78,7 +77,7 @@ class App extends Component {
     let data = e.dataTransfer.getData("text");
     const id = e.target.id;
     if(!id || id === activeDrag) {
-      this.clearDrggingState()
+      this.clearDrggingState();
       return;
     }
     let item1 = parseInt(data.split('-')[1], 10);
@@ -136,13 +135,13 @@ class App extends Component {
   }
 
   render() {
-    const { count } = this.state;
     return (
       <div className="app">
         <h1>Welcome to Puzzle Game</h1>
         <h3>Change Puzzle Size</h3>
         <div className="form-item">
           <input
+            placeholder="Change Puzzle Size."
             type="text"
             name="count"
             pattern="[0-9]*"
